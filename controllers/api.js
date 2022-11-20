@@ -165,7 +165,7 @@ exports.transport_code = function (code, req, res, next) {
     opts.waitingFor = properties.getMethodProperty(req.params.method, 'waitingFor');
     switch (req.params.transport) {
         case 'mail':
-            opts.message = properties.getMessage('transport', 'code').mail.pre_test + code + properties.getMessage('transport', 'code').mail.post_test
+            opts.code = code
             break;
         case 'sms':
             opts.message = properties.getMessage('transport', 'code').sms.pre_test + code + properties.getMessage('transport', 'code').sms.post_test

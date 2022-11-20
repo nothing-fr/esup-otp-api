@@ -4,6 +4,9 @@ var nodemailer = require("nodemailer");
 var smtpTransport = require('nodemailer-smtp-transport');
 var logger = require(__dirname + '/../services/logger').getInstance();
 
+var _jade = require('jade');
+var fs = require('fs');
+
 // create reusable transport method (opens pool of SMTP connections)
 var options = {
     // service: properties.esup.mailer.service,
@@ -25,7 +28,9 @@ var mailOptions = {
 
 exports.send_message = function(mail, opts, res) {
     if (utils.check_transport_validity('mail', mail)) {
-        mailOptions.text = opts.message;
+        //mailOptions.text = opts.message;
+        var mailHtml = _jade.renderFile(__dirname + '/../templates/mail/sendcode.jade', {code: opts.code});
+        mailOptions.html = mailHtml;
         mailOptions.to = mail;
         mailOptions.subject = opts.object;
         // send mail with defined transport object
